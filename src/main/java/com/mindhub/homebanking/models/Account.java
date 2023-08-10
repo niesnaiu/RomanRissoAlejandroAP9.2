@@ -21,6 +21,9 @@ public class Account {
     @JoinColumn(name="client_id")
     private Client client;
 
+    @OneToMany(mapppedBy="Account", fetch =FetchType.EAGER)
+    private Set<Transaction> transactions = new.HashSet<>();
+
     public Account(){
 
     }
@@ -66,5 +69,13 @@ public class Account {
 
     public long getId() {
         return id;
+    }
+
+    public Set<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(Set<Transaction> transactions) {
+        this.transactions = transactions;
     }
 }
