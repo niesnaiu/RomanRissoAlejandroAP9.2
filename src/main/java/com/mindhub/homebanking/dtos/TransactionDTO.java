@@ -34,39 +34,24 @@ public class TransactionDTO {
         return amount;
     }
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
 
     public LocalDate getTransactionDate() {
         return transactionDate;
     }
 
-    public void setTransactionDate(LocalDate transactionDate) {
-        this.transactionDate = transactionDate;
-    }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public TransactionType getType() {
         return type;
     }
 
-    public void setType(TransactionType type) {
-        this.type = type;
-    }
 
     public double getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
 }
