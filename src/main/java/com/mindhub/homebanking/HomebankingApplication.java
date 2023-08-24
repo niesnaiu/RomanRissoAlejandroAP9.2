@@ -28,6 +28,8 @@ PasswordEncoder passwordEncoder;
 			clientRepository.save(client);
 			Client client2 = new Client ("Juana", "Perez", "JuanaPerez@hotmail.com", passwordEncoder.encode("abc"));
 			clientRepository.save(client2);
+			Client  admin = new Client ("admin","admin","admin@admin.com", passwordEncoder.encode("123"));
+			clientRepository.save(admin);
 
 			Account account1 = new Account("VIN001", LocalDate.now(), 5000.00);
 			client.addAccount(account1);

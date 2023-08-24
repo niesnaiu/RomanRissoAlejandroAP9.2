@@ -6,6 +6,7 @@ import com.mindhub.homebanking.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,17 +33,14 @@ public class ClientController {
         Optional<Client> client = clientRepository.findById(id);
         return new ClientDTO(client.get());
     }
-    /*@GetMapping (/api/clients/current)
-    public ClientDTO getCurrentClient(){
-        return null;
-    }*/
-    @RequestMapping(path ="/clients", method = RequestMethod.POST)
+
+    @PostMapping ("/clients")
     public ResponseEntity<Object> register(
             @RequestParam String firstName,
             @RequestParam String lastName,
             @RequestParam String email,
-            @RequestParam String password) {
-        if (firstName.isEmpty() || lastName.isEmpty()|| email.isEmpty()|| password.isEmpty()){
+            @RequestParam String password ) {
+        if (firstName.isBlank() || lastName.isBlank() || email.isBlank() || password.isBlank()){
             return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
         }
         if (clientRepository.findByEmail(email) != null){
@@ -51,5 +49,10 @@ public class ClientController {
         clientRepository.save(new Client(firstName, lastName, email, passwordEncoder.encode(password)));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+    @GetMapping ("/clients/current")
+    public ClientDTO getAll(Authentication authentication){
+        return new ClientDTO( clientRepository.findByEmail(authentication.getName()));
+    }
+
 
 }

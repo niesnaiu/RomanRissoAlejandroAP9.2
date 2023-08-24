@@ -16,27 +16,25 @@ import javax.servlet.http.HttpSession;
 @Configuration
 public class WebAuthorization extends WebSecurityConfigurerAdapter {
     @Override
-
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
-                .antMatchers("web/index.html", "web/css/**", "web/img/**", "web/js/**").permitAll()
-                .antMatchers(HttpMethod.POST, "api/login", "api/logout").permitAll()
-                .antMatchers("rest/**").hasAnyAuthority("ADMIN")
-                .antMatchers("/h2-console/**").hasAuthority("ADMIN")
-                .antMatchers("web/**").hasAuthority("CLIENT");
+                .antMatchers("/web/index.html", "/web/css/**", "/web/img/**", "/web/js/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/login", "/api/logout", "/api/clients").permitAll()
+                .antMatchers("/api/clients/current").hasAuthority("CLIENT")
+                .antMatchers("/rest/**", "/h2-console/**", "/api/**").hasAuthority("ADMIN");
+
 
         http.formLogin()
                 .usernameParameter("email")
                 .passwordParameter("password")
                 .loginPage("/api/login");
-        http.logout().logoutUrl("/app/logout");
+
+        http.logout().logoutUrl("/api/logout");
 
         // turn off checking for CSRF tokens
 
         http.csrf().disable();
-
-
 
         //disabling frameOptions so h2-console can be accessed
 
