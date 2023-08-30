@@ -2,6 +2,8 @@ package com.mindhub.homebanking.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mindhub.homebanking.extras.ExtraMeth;
+import com.mindhub.homebanking.repositories.AccountRepository;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -83,6 +85,15 @@ public class Account {
     public void addTransaction (Transaction transaction){
         transaction.setAccount(this);
         transactions.add(transaction);
+    }
+
+    public static String generateAccountNumber(AccountRepository accountRepository) {
+        int randomNumber;
+        String numberAccount;
+        do { randomNumber = ExtraMeth.getRandomNumber(1, 99999999);
+            numberAccount = String.format("VIN-%08d", randomNumber);}
+        while (accountRepository.existsByNumber(numberAccount));
+        return numberAccount;
     }
 
 }
