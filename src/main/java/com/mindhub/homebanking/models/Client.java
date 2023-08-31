@@ -122,4 +122,9 @@ public class Client {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public void addCard(Card card){
+        card.setClient(this);
+        cards.add(card);
+    }
 }

@@ -1,9 +1,12 @@
 package com.mindhub.homebanking.models;
 
+import com.mindhub.homebanking.extras.ExtraMeth;
+import com.mindhub.homebanking.repositories.CardRepository;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Random;
 
 
 @Entity
@@ -16,7 +19,7 @@ public class Card {
     private CardType type;
     private CardColor color;
     private String number;
-    private int cvv;
+    private String cvv;
     private LocalDate thruDate;
 
     private LocalDate fromDate;
@@ -25,7 +28,7 @@ public class Card {
     private Client client;
     public Card(){}
 
-    public Card(Client client, CardType type, CardColor color, String number, int cvv, LocalDate thruDate, LocalDate fromDate) {
+    public Card(Client client, CardType type, CardColor color, String number, String cvv, LocalDate thruDate, LocalDate fromDate) {
         this.client = client;
         this.cardHolder = client.getFirstName() + " "+ client.getLastName();
         this.type = type;
@@ -72,11 +75,11 @@ public class Card {
         this.number = number;
     }
 
-    public int getCvv() {
+    public String getCvv() {
         return cvv;
     }
 
-    public void setCvv(int cvv) {
+    public void setCvv(String cvv) {
         this.cvv = cvv;
     }
 
@@ -103,4 +106,39 @@ public class Card {
     public void setClient(Client client) {
         this.client = client;
     }
+
+    // generador de números aleatorios
+
+    public static String generateCardNumber(CardRepository cardRepository) {
+
+        StringBuilder numberCard = new StringBuilder();
+
+        boolean exists;
+        do {
+            numberCard.setLength(0);
+
+            for (int i = 0; i < 4; i++) {
+                if (i > 0) {
+                    numberCard.append("-");
+                }
+                numberCard.append(String.format("%04d", ExtraMeth.getRandomNumber(1, 9999)));
+            }
+
+            exists = cardRepository.existsByNumber(numberCard.toString());
+        } while (exists);
+
+        return numberCard.toString();
+    }
+
+    //Crear CVV
+
+    public static String generateCvv (CardRepository cardRepository){
+        int numberCvv;
+        String cvv;
+        do{
+            numberCvv = ExtraMeth.getRandomNumber(1, 999);
+            cvv = String.format("%03d", numberCvv);} while (cardRepository.existsByCvv(cvv));
+        return cvv;
+    }
+
 }

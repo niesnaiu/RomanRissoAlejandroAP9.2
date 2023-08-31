@@ -67,11 +67,11 @@ PasswordEncoder passwordEncoder;
 			ClientLoan clonan4 = new ClientLoan(200000, 36, client2, lon3);
 			clientLoanRepository.save(clonan4);
 
-			Card card1 = new Card(client, CardType.DEBIT, CardColor.GOLD, "123412341234", 433, LocalDate.now().plusYears(5), LocalDate.now());
+			Card card1 = new Card(client, CardType.DEBIT, CardColor.GOLD, "123412341234", "433", LocalDate.now().plusYears(5), LocalDate.now());
 			cardRepository.save(card1);
-			Card card2 = new Card(client, CardType.CREDIT, CardColor.TITANIUM, "894939483948", 322, LocalDate.now().plusYears(5), LocalDate.now());
+			Card card2 = new Card(client, CardType.CREDIT, CardColor.TITANIUM, "894939483948", "322", LocalDate.now().plusYears(5), LocalDate.now());
 			cardRepository.save(card2);
-			Card card3 = new Card(client2, CardType.DEBIT, CardColor.SILVER, "89562873656", 877, LocalDate.now().plusYears(5), LocalDate.now());
+			Card card3 = new Card(client2, CardType.DEBIT, CardColor.SILVER, "89562873656", "877", LocalDate.now().plusYears(5), LocalDate.now());
 			cardRepository.save(card3);
 
 		};
