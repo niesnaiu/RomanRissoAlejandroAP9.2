@@ -41,24 +41,23 @@ public class CardController {
             if (cardType == CardType.CREDIT){
                 if (creditCards.size() < 3){
                     if (creditCards.stream().anyMatch(card -> card.getColor().equals(cardColor))){
-                        return new ResponseEntity<>("You already have such a card", HttpStatus.FORBIDDEN);
+                        return new ResponseEntity<>("Not possible. Already have that color", HttpStatus.FORBIDDEN);
                     }
                 } else{
-                    return new ResponseEntity<>("You have reached the credit card limit", HttpStatus.FORBIDDEN);
+                    return new ResponseEntity<>("Maximum reached", HttpStatus.FORBIDDEN);
                 }
             }
 
             if (cardType == CardType.DEBIT){
                 if (debitCards.size() < 3){
                     if (debitCards.stream().anyMatch(card -> card.getColor().equals(cardColor))){
-                        return new ResponseEntity<>("You already have such a card", HttpStatus.FORBIDDEN);
+                        return new ResponseEntity<>("Not possible. Already have that Color", HttpStatus.FORBIDDEN);
                     }
                 } else{
-                    return new ResponseEntity<>("You have reached the debit card limit", HttpStatus.FORBIDDEN);
+                    return new ResponseEntity<>("Maximum reached", HttpStatus.FORBIDDEN);
                 }
             };
 
-            // create card
 
             String number = Card.generateCardNumber(cardRepository);
             String  cvv = Card.generateCvv(cardRepository);
@@ -72,6 +71,6 @@ public class CardController {
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
 
-        return new ResponseEntity<>("You are not logged it", HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>("Please, Log in.", HttpStatus.FORBIDDEN);
     }
 }
