@@ -23,7 +23,7 @@ public class Transaction {
 
     public Transaction (){}
 
-    public Transaction(Double amount, String description, TransactionType type) {
+    public Transaction(TransactionType type, Double amount, String description) {
         this.amount = amount;
         this.description = description;
         this.type = type;
