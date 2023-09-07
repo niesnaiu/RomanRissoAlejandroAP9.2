@@ -8,18 +8,16 @@ import java.time.LocalDate;
 public class TransactionDTO {
     private Long id;
     private Double amount;
-    private LocalDate transactionDate;
+    private LocalDate date = LocalDate.now();
     private String description;
     private TransactionType type;
     private double balance;
 
     public TransactionDTO (Transaction transaction){
         this.id = transaction.getId();
-        this.amount = transaction.getAmount();
-        this.transactionDate = transaction.getTransactionDate();
-        this.description = transaction.getDescription();
         this.type = transaction.getType();
-        this.balance = transaction.getBalance();
+        this.amount = transaction.getAmount();
+        this.description = transaction.getDescription();
     }
 
     public Long getId() {
@@ -34,11 +32,9 @@ public class TransactionDTO {
         return amount;
     }
 
-
-    public LocalDate getTransactionDate() {
-        return transactionDate;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
-
 
     public String getDescription() {
         return description;
@@ -54,4 +50,7 @@ public class TransactionDTO {
         return balance;
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
 }

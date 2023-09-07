@@ -33,10 +33,28 @@ public class AccountController {
     public List<AccountDTO> getAccounts(){
         return this.accountRepository.findAll().stream().map(AccountDTO::new).collect(Collectors.toList());
     }
-    @GetMapping ("/accounts/{id}")
-    public AccountDTO getAccountById(@PathVariable Long id){
-        Account account = accountRepository.findById(id).get();
-        return new AccountDTO(account);
+
+    @RequestMapping("/accounts/{id}")
+    public ResponseEntity<Object> getAccount (@PathVariable Long id, Authentication authentication){
+        if(authentication != null){
+
+            Client client = clientRepository.findByEmail(authentication.getName());
+            Account account = accountRepository.findById(id).orElse(null);
+
+            if (account == null){
+                return new ResponseEntity<>("This account does not exist", HttpStatus.NOT_FOUND);
+            }
+
+            if (account.getClient().equals(client)){
+
+                AccountDTO accountDTO = new AccountDTO(account);
+                return new ResponseEntity<>(accountDTO, HttpStatus.ACCEPTED);
+            } else{
+                return new ResponseEntity<>("Sorry, you don't have access to this account.", HttpStatus.FORBIDDEN);
+            }
+        }
+        return new ResponseEntity<>("You are not logged it", HttpStatus.FORBIDDEN);
+
     }
 
     @PostMapping("/clients/current/accounts")
@@ -57,6 +75,12 @@ public class AccountController {
             return new ResponseEntity<>("Creado", HttpStatus.CREATED);
         }
         return new ResponseEntity<>("Not logged in", HttpStatus.FORBIDDEN);
+    }
+
+    @GetMapping("/clients/current/accounts")
+    public List<AccountDTO> getCurrentAccounts(Authentication authentication){
+        Client client = clientRepository.findByEmail(authentication.getName());
+        return client.getAccounts().stream().map(AccountDTO::new).collect(Collectors.toList());
     }
 
 

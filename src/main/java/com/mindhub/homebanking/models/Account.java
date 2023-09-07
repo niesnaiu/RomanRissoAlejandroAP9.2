@@ -85,6 +85,7 @@ public class Account {
     public void addTransaction (Transaction transaction){
         transaction.setAccount(this);
         transactions.add(transaction);
+        this.balance = balance + transaction.getAmount();
     }
 
     public static String generateAccountNumber(AccountRepository accountRepository) {

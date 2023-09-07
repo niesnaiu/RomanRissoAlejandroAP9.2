@@ -41,13 +41,13 @@ PasswordEncoder passwordEncoder;
 			client2.addAccount(account3);
 			accountRepository.save(account3);
 
-			Transaction trans1 = new Transaction(1000.00,LocalDate.now(),"cuenta1 credito", TransactionType.CREDITO, 8500);
+			Transaction trans1 = new Transaction(1000.00,"cuenta 1 credito", TransactionType.CREDITO);
 			account1.addTransaction(trans1);
 			transactionRepository.save(trans1);
-			Transaction trans2 = new Transaction(-2000.00,LocalDate.now(),"cuenta1 debito", TransactionType.DEBITO, 6500);
+			Transaction trans2 = new Transaction(-2000.00,"cuenta1 debito", TransactionType.DEBITO);
 			account1.addTransaction(trans2);
 			transactionRepository.save(trans2);
-			Transaction trans3 = new Transaction(1000.00,LocalDate.now(),"cuenta3 credito", TransactionType.CREDITO, 28500);
+			Transaction trans3 = new Transaction(1000.00,"cuenta3 credito", TransactionType.CREDITO);
 			account3.addTransaction(trans3);
 			transactionRepository.save(trans3);
 

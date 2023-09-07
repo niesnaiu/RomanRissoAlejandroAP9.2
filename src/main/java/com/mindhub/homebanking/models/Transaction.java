@@ -12,7 +12,7 @@ public class Transaction {
     @GenericGenerator( name = "nativa", strategy = "native")
     private long id;
     private Double amount;
-    private LocalDate transactionDate;
+    private LocalDate date = LocalDate.now();
     private String description;
     private TransactionType type;
     private double balance;
@@ -23,13 +23,10 @@ public class Transaction {
 
     public Transaction (){}
 
-    public Transaction(double amount, LocalDate transactionDate, String description, TransactionType type, double balance) {
+    public Transaction(Double amount, String description, TransactionType type) {
         this.amount = amount;
-        this.transactionDate = transactionDate;
         this.description = description;
-        this.account = account;
         this.type = type;
-        this.balance = balance;
     }
 
     public long getId() {
@@ -48,13 +45,13 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public LocalDate getTransactionDate() {
+    /*public LocalDate getTransactionDate() {
         return transactionDate;
-    }
+    }*/
 
-    public void setTransactionDate(LocalDate transactionDate) {
+    /*public void setTransactionDate(LocalDate transactionDate) {
         this.transactionDate = transactionDate;
-    }
+    }*/
 
     public String getDescription() {
         return description;
@@ -86,5 +83,13 @@ public class Transaction {
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 }

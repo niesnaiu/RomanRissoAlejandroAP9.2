@@ -47,10 +47,10 @@ public class ClientController {
             @RequestParam String email,
             @RequestParam String password ) {
         if (firstName.isBlank() || lastName.isBlank() || email.isBlank() || password.isBlank()){
-            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Not enough data", HttpStatus.FORBIDDEN);
         }
         if (clientRepository.findByEmail(email) != null){
-            return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("email already taken", HttpStatus.FORBIDDEN);
         }
         Client newclient = new Client(firstName, lastName, email, passwordEncoder.encode(password));
         clientRepository.save(newclient);
@@ -65,7 +65,7 @@ public class ClientController {
 
     }
     @GetMapping ("/clients/current")
-    public ClientDTO getAll(Authentication authentication){
+    public ClientDTO getCurrent (Authentication authentication){
         return new ClientDTO( clientRepository.findByEmail(authentication.getName()));
     }
 
