@@ -76,4 +76,9 @@ public class Loan {
     public List<Client> getClients(){
         return clientLoans.stream().map(ClientLoan::getClient).collect(toList());
     }
+
+    public void addClientLoan(ClientLoan clientLoan){
+        clientLoan.setLoan(this);
+        clientLoans.add(clientLoan);
+    }
 }

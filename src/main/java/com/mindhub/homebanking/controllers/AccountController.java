@@ -42,7 +42,7 @@ public class AccountController {
             Account account = accountRepository.findById(id).orElse(null);
 
             if (account == null){
-                return new ResponseEntity<>("This account does not exist", HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("No Account found", HttpStatus.NOT_FOUND);
             }
 
             if (account.getClient().equals(client)){
@@ -50,10 +50,10 @@ public class AccountController {
                 AccountDTO accountDTO = new AccountDTO(account);
                 return new ResponseEntity<>(accountDTO, HttpStatus.ACCEPTED);
             } else{
-                return new ResponseEntity<>("Sorry, you don't have access to this account.", HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>("Access denied.", HttpStatus.FORBIDDEN);
             }
         }
-        return new ResponseEntity<>("You are not logged it", HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>("Please log in", HttpStatus.FORBIDDEN);
 
     }
 

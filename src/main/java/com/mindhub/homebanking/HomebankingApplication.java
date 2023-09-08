@@ -58,14 +58,14 @@ PasswordEncoder passwordEncoder;
             Loan lon3 = new Loan("Automotriz", 300000, List.of(6,12,24));
             loanRepository.save(lon3);
 
-			ClientLoan clonan = new ClientLoan(400000,60,client, lon1);
+			/*ClientLoan clonan = new ClientLoan(400000.00,60);
 			clientLoanRepository.save(clonan);
-			ClientLoan clonan2 = new ClientLoan(50000,12,client,lon3);
+			ClientLoan clonan2 = new ClientLoan(50000.00,12);
 			clientLoanRepository.save(clonan2);
-			ClientLoan clonan3 = new ClientLoan(100000,24,client2, lon2);
+			ClientLoan clonan3 = new ClientLoan(100000.00,24);
 			clientLoanRepository.save(clonan3);
-			ClientLoan clonan4 = new ClientLoan(200000, 36, client2, lon3);
-			clientLoanRepository.save(clonan4);
+			ClientLoan clonan4 = new ClientLoan(200000.00, 36);
+			clientLoanRepository.save(clonan4);*/
 
 			Card card1 = new Card(client, CardType.DEBIT, CardColor.GOLD, "123412341234", "433", LocalDate.now().plusYears(5), LocalDate.now());
 			cardRepository.save(card1);

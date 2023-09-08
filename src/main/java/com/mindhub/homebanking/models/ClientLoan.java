@@ -10,7 +10,7 @@ public class ClientLoan {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
-    private double amount;
+    private Double amount;
     private int payments;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -23,11 +23,10 @@ public class ClientLoan {
 
     public ClientLoan(){}
 
-    public ClientLoan(double amount, int payments, Client client, Loan loan) {
+    public ClientLoan(Double amount, int payments) {
         this.amount = amount;
         this.payments = payments;
-        this.client = client;
-        this.loan = loan;
+
     }
 
     public long getId() {
@@ -38,11 +37,11 @@ public class ClientLoan {
         this.id = id;
     }
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
