@@ -51,4 +51,5 @@ public class LoanDTO {
     public void setPayments(List<Integer> payments) {
         this.payments = payments;
     }
+
 }

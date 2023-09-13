@@ -3,33 +3,32 @@ package com.mindhub.homebanking.dtos;
 import com.mindhub.homebanking.models.ClientLoan;
 
 public class ClientLoanDTO {
-    private long id;
-    private long loanId;
-    private Double amount;
+    private Long id;
+    private Long loanId;
+    private double amount;
     private int payments;
-    private String loanName;
+    private String name;
     public ClientLoanDTO(){
 
     }
     public ClientLoanDTO(ClientLoan clientLoan) {
+        this.name= clientLoan.getLoan().getName();
         this.id = clientLoan.getId();
-        this.loanId = clientLoan.getLoan().getId();
         this.amount = clientLoan.getAmount();
         this.payments = clientLoan.getPayments();
-        this.loanName = clientLoan.getLoan().getName();
-
+        this.loanId = clientLoan.getLoan().getId();
 
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public long getLoanId() {
+    public Long getLoanId() {
         return loanId;
     }
 
-    public Double getAmount() {
+    public double getAmount() {
         return amount;
     }
 
@@ -37,9 +36,23 @@ public class ClientLoanDTO {
         return payments;
     }
 
-    public String getLoanName() {
-        return loanName;
+    /*public String getLoanName() {
+        return name;
+    }*/
+
+    public String getName() {
+        return name;
     }
 
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
 
+    public void setPayments(int payments) {
+        this.payments = payments;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

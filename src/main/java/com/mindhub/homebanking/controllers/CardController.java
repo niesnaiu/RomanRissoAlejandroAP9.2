@@ -27,7 +27,7 @@ public class CardController {
     @Autowired
     CardRepository cardRepository;
 
-    @RequestMapping(path = "/clients/current/cards", method = RequestMethod.POST)
+    @PostMapping("/clients/current/cards")
     public ResponseEntity<Object> createCard(Authentication authentication, CardColor cardColor, CardType cardType){
 
         if (authentication != null){

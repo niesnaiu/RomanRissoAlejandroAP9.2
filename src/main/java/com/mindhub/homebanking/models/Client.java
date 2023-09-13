@@ -16,16 +16,17 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    private long id;
+    private Long id;
     private String firstName;
     private String lastName;
+    @Column(unique = true)
     private String email;
     private String password;
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<Account> accounts = new HashSet<>();
 
     @OneToMany(mappedBy = "client", fetch=FetchType.EAGER)
-    private Set<ClientLoan> clientLoans = new HashSet<>();
+    private Set<ClientLoan> loans = new HashSet<>();
 
     @OneToMany(mappedBy = "client", fetch=FetchType.EAGER)
     private Set<Card>  cards = new HashSet<>();
@@ -46,7 +47,7 @@ public class Client {
 
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -92,19 +93,15 @@ public class Client {
     }
 
     public Set<ClientLoan> getClientLoans() {
-        return clientLoans;
+        return loans;
     }
 
-    public void setClientLoans(Set<ClientLoan> clientLoans) {
-        this.clientLoans = clientLoans;
+    public void setLoans(Set<ClientLoan> clientLoans) {
+        this.loans = clientLoans;
     }
-    public void addClientLoans (ClientLoan clientLoan){
-        clientLoan.setClient(this);
-        clientLoans.add(clientLoan);
-    }
- @JsonIgnore
+
     public List<Loan> getLoans(){
-        return clientLoans.stream().map(lo -> lo.getLoan()).collect(toList());
+        return loans.stream().map(loan -> loan.getLoan()).collect(toList());
     }
 
     public Set<Card> getCards() {
@@ -127,4 +124,10 @@ public class Client {
         card.setClient(this);
         cards.add(card);
     }
+    public void addClientLoan(ClientLoan clientLoan){
+        clientLoan.setClient(this);
+        loans.add(clientLoan);
+    }
+
+
 }

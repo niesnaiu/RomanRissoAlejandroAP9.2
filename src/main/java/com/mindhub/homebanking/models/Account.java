@@ -16,10 +16,10 @@ public class Account {
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator( name = "native", strategy ="native")
-    private long id;
+    private Long id;
     private String number;
     private LocalDate creationDate;
-    private Double balance;
+    private double balance;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="client_id")
@@ -32,10 +32,14 @@ public class Account {
 
     }
 
-    public Account(String number, LocalDate creationDate, Double balance) {
+    public Account(String number, LocalDate creationDate, double balance) {
         this.number = number;
         this.creationDate = creationDate;
         this.balance = balance;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNumber() {
@@ -54,14 +58,14 @@ public class Account {
         this.creationDate = creationDate;
     }
 
-    public Double getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    public void setBalance(Double balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
-    @JsonIgnore
+
     public Client getClient() {
         return client;
     }
@@ -70,7 +74,7 @@ public class Account {
         this.client = client;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

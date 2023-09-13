@@ -18,6 +18,7 @@ public class HomebankingApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HomebankingApplication.class, args);
 	}
+	/*
 @Autowired
 PasswordEncoder passwordEncoder;
 
@@ -58,14 +59,22 @@ PasswordEncoder passwordEncoder;
             Loan lon3 = new Loan("Automotriz", 300000, List.of(6,12,24));
             loanRepository.save(lon3);
 
-			/*ClientLoan clonan = new ClientLoan(400000.00,60);
+			ClientLoan clonan = new ClientLoan(400000.00,60);
+			client.addClientLoan(clonan);
+			lon1.addClientLoan(clonan);
 			clientLoanRepository.save(clonan);
 			ClientLoan clonan2 = new ClientLoan(50000.00,12);
+			client.addClientLoan(clonan2);
+			lon2.addClientLoan(clonan2);
 			clientLoanRepository.save(clonan2);
 			ClientLoan clonan3 = new ClientLoan(100000.00,24);
+			client2.addClientLoan(clonan3);
+			lon3.addClientLoan(clonan3);
 			clientLoanRepository.save(clonan3);
 			ClientLoan clonan4 = new ClientLoan(200000.00, 36);
-			clientLoanRepository.save(clonan4);*/
+			client2.addClientLoan(clonan4);
+			lon1.addClientLoan(clonan4);
+			clientLoanRepository.save(clonan4);
 
 			Card card1 = new Card(client, CardType.DEBIT, CardColor.GOLD, "123412341234", "433", LocalDate.now().plusYears(5), LocalDate.now());
 			cardRepository.save(card1);
@@ -75,5 +84,5 @@ PasswordEncoder passwordEncoder;
 			cardRepository.save(card3);
 
 		};
-	}
+	}*/
 }
