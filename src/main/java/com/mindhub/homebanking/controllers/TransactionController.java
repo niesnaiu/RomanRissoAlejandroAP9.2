@@ -7,6 +7,9 @@ import com.mindhub.homebanking.models.TransactionType;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.ClientService;
+import com.mindhub.homebanking.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class TransactionController {
     @Autowired
-    ClientRepository clientRepository;
+    ClientService clientService;
     @Autowired
-    AccountRepository accountRepository;
+    AccountService accountService;
     @Autowired
-    TransactionRepository transactionRepository;
+    TransactionService transactionService;
 
     @Transactional
     @PostMapping("/transactions")
@@ -45,9 +48,9 @@ public class TransactionController {
             if (fromAccountNumber.equals(toAccountNumber)){
                 return new ResponseEntity<>("Same account selected", HttpStatus.FORBIDDEN);}
 
-            Client client = clientRepository.findByEmail(authentication.getName());
-            Account toAccount = accountRepository.findByNumber(toAccountNumber);
-            Account fromAccount = accountRepository.findByNumber(fromAccountNumber);
+            Client client = clientService.findByEmail(authentication.getName());
+            Account toAccount = accountService.findAccountsByNum(toAccountNumber);
+            Account fromAccount = accountService.findAccountsByNum(fromAccountNumber);
 
             //Verificar que la cuenta de origen exista
             if (fromAccount == null){
@@ -67,16 +70,16 @@ public class TransactionController {
             String descripcionOrigen = description + " " + fromAccountNumber;
             String descripcionDestino = description + " " + toAccountNumber;
 
-            Transaction origin = transactionRepository.save( new Transaction(TransactionType.DEBIT, -amount, descripcionOrigen));
+            Transaction origin =  new Transaction(TransactionType.DEBIT, -amount, descripcionOrigen);
             fromAccount.addTransaction(origin);
-            transactionRepository.save(origin);
+            transactionService.saveTransaction(origin);
 
-            Transaction aimAccount = transactionRepository.save( new Transaction(TransactionType.CREDIT, amount, descripcionDestino));
+            Transaction aimAccount =  new Transaction(TransactionType.CREDIT, amount, descripcionDestino);
             toAccount.addTransaction(aimAccount);
-            transactionRepository.save(aimAccount);
+            transactionService.saveTransaction(aimAccount);
 
-            accountRepository.save(toAccount);
-            accountRepository.save(fromAccount);
+            accountService.saveAccount(toAccount);
+            accountService.saveAccount(fromAccount);
 
             return new ResponseEntity<>("Success", HttpStatus.CREATED);
 

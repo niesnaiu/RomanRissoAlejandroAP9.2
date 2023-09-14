@@ -5,6 +5,7 @@ import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,20 +25,19 @@ public class ClientController {
     @Autowired
     AccountRepository accountRepository;
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
 
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    @RequestMapping("/clients")
+    @GetMapping("/clients")
     public List<ClientDTO> getClients(){
-        return clientRepository.findAll().stream().map(ClientDTO::new).collect(Collectors.toList());
+        return clientService.getClientsDTOformat();
 
     }
-    @RequestMapping("/clients/{id}")
+    @GetMapping("/clients/{id}")
     public ClientDTO getClientById(@PathVariable Long id){
-        Optional<Client> client = clientRepository.findById(id);
-        return new ClientDTO(client.get());
+        return clientService.getClientById(id);
     }
 
     @PostMapping ("/clients")
@@ -49,11 +49,11 @@ public class ClientController {
         if (firstName.isBlank() || lastName.isBlank() || email.isBlank() || password.isBlank()){
             return new ResponseEntity<>("Not enough data", HttpStatus.FORBIDDEN);
         }
-        if (clientRepository.findByEmail(email) != null){
+        if ( clientService.findByEmail(email)!= null){
             return new ResponseEntity<>("email already taken", HttpStatus.FORBIDDEN);
         }
         Client newclient = new Client(firstName, lastName, email, passwordEncoder.encode(password));
-        clientRepository.save(newclient);
+        clientService.saveClient(newclient);
 
         LocalDate date = LocalDate.now();
         String numberAccount = Account.generateAccountNumber(accountRepository);
@@ -66,7 +66,7 @@ public class ClientController {
     }
     @GetMapping ("/clients/current")
     public ClientDTO getCurrent (Authentication authentication){
-        return new ClientDTO( clientRepository.findByEmail(authentication.getName()));
+        return new ClientDTO( clientService.findByEmail(authentication.getName()));
     }
 
 
