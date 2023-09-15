@@ -1,5 +1,6 @@
 package com.mindhub.homebanking.controllers;
 
+import com.mindhub.homebanking.extras.ExtraMeth;
 import com.mindhub.homebanking.models.Card;
 import com.mindhub.homebanking.models.CardColor;
 import com.mindhub.homebanking.models.CardType;
@@ -59,8 +60,8 @@ public class CardController {
             };
 
 
-            String number = Card.generateCardNumber(cardRepository);
-            String  cvv = Card.generateCvv(cardRepository);
+            String number = ExtraMeth.generateCardNumber(cardRepository);
+            String  cvv = ExtraMeth.generateCvv(cardRepository);
             LocalDate thruDate = LocalDate.now().plusYears(5);
             LocalDate fromDate = LocalDate.now();
 

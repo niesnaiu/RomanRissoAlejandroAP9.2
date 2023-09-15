@@ -107,38 +107,7 @@ public class Card {
         this.client = client;
     }
 
-    // generador de números aleatorios
 
-    public static String generateCardNumber(CardRepository cardRepository) {
 
-        StringBuilder numberCard = new StringBuilder();
-
-        boolean exists;
-        do {
-            numberCard.setLength(0);
-
-            for (int i = 0; i < 4; i++) {
-                if (i > 0) {
-                    numberCard.append("-");
-                }
-                numberCard.append(String.format("%04d", ExtraMeth.getRandomNumber(1, 9999)));
-            }
-
-            exists = cardRepository.existsByNumber(numberCard.toString());
-        } while (exists);
-
-        return numberCard.toString();
-    }
-
-    //Crear CVV
-
-    public static String generateCvv (CardRepository cardRepository){
-        int numberCvv;
-        String cvv;
-        do{
-            numberCvv = ExtraMeth.getRandomNumber(1, 999);
-            cvv = String.format("%03d", numberCvv);} while (cardRepository.existsByCvv(cvv));
-        return cvv;
-    }
 
 }
